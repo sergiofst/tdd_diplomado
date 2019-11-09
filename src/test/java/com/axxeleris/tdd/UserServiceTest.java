@@ -39,6 +39,7 @@ public class UserServiceTest {
 
         persistedUser.setId(1L);
         when(mockUserRepository.save(any())).thenReturn(persistedUser);
+        when(mockUserRepository.findUser(anyString())).thenReturn(Optional.empty());
 
         User newUser = new User(
                 "new_user_name",

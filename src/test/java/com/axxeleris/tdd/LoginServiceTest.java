@@ -1,5 +1,6 @@
 package com.axxeleris.tdd;
 
+import com.axxeleris.tdd.exception.UserNotFoundException;
 import com.axxeleris.tdd.repository.UserRepository;
 import com.axxeleris.tdd.domain.User;
 import com.axxeleris.tdd.exception.BlockedUserException;
@@ -41,6 +42,17 @@ public class LoginServiceTest {
         User loggedUser = loginService.login("user", "secret");
 
         assertEquals(loggedUser, expectedUser);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void failOnInvalidUsername() {
+
+        // Stub
+        when(userRepository.findUser(Mockito.anyString()))
+                .thenReturn(Optional.empty());
+
+        LoginServiceImpl loginService = new LoginServiceImpl(userRepository);
+        loginService.login("user", "wrong_password");
     }
 
     @Test(expected = InvalidUserAndPasswordException.class)
