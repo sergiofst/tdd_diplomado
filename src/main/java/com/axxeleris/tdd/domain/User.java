@@ -1,9 +1,17 @@
 package com.axxeleris.tdd.domain;
 
 public class User {
+    private Long id;
     private String userName;
     private String password;
     private Boolean blocked;
+
+    public User(Long id, String userName, String password, Boolean blocked) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.blocked = blocked;
+    }
 
     public User(String userName, String password, Boolean blocked) {
         this.userName = userName;
