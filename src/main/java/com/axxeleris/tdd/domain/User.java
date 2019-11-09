@@ -1,6 +1,7 @@
 package com.axxeleris.tdd.domain;
 
 public class User {
+    private Long id;
     private String userName;
     private String password;
     private Boolean blocked;
@@ -9,6 +10,14 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.blocked = blocked;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {

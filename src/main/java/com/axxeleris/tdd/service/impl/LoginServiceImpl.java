@@ -3,6 +3,7 @@ package com.axxeleris.tdd.service.impl;
 import com.axxeleris.tdd.domain.User;
 import com.axxeleris.tdd.exception.BlockedUserException;
 import com.axxeleris.tdd.exception.InvalidUserAndPasswordException;
+import com.axxeleris.tdd.exception.UserNotFoundException;
 import com.axxeleris.tdd.repository.UserRepository;
 import com.axxeleris.tdd.service.LoginService;
 
@@ -16,7 +17,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User login(String userName, String password) {
-        User foundUser = userRepository.findUser(userName);
+        User foundUser = userRepository.findUser(userName)
+                .orElseThrow(() -> new UserNotFoundException());
+
         if ("secret".equals(password)) {
             checkBlockedUser(foundUser);
             return foundUser;

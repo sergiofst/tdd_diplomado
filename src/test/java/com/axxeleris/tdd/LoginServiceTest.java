@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,7 +36,7 @@ public class LoginServiceTest {
 
         // Stub
         when(userRepository.findUser(Mockito.anyString()))
-                .thenReturn(expectedUser);
+                .thenReturn(Optional.of(expectedUser));
 
         User loggedUser = loginService.login("user", "secret");
 
@@ -46,7 +48,7 @@ public class LoginServiceTest {
 
         // Stub
         when(userRepository.findUser(Mockito.anyString()))
-                .thenReturn(userWithWrongPassword);
+                .thenReturn(Optional.of(userWithWrongPassword));
 
         LoginServiceImpl loginService = new LoginServiceImpl(userRepository);
         loginService.login("user", "wrong_password");
@@ -58,7 +60,7 @@ public class LoginServiceTest {
 
         // Stub
         when(userRepository.findUser(Mockito.anyString()))
-                .thenReturn(blockedUser);
+                .thenReturn(Optional.of(blockedUser));
 
         LoginServiceImpl loginService = new LoginServiceImpl(userRepository);
         loginService.login("blocked_user", "secret");
